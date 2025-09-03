@@ -1,10 +1,10 @@
 import subprocess
 from settings import Setup
-import wmi
+import time
 
 class App:
     def __init__(self):
-        self.hosts = Setup().import_settings()
+        self.timeout, self.hosts = Setup().import_settings()
 
         self.totens = self.hosts['totens']
         self.panels = self.hosts['panels']
@@ -35,7 +35,12 @@ class App:
                     self.totens_offline_hosts.append(host)
 
     def run(self):
-        self.isOnline(self.hosts['totens'])
+        while True:
+            self.isOnline(self.totens, 'totem')
+            print("Totens Online:", self.totens_online_hosts)
+            self.isOnline(self.panels, 'panel')
+            print("Panels Online:", self.panels_online_hosts)
+            time.sleep(int(self.timeout) / 1000)
         
 if __name__ == "__main__":
     app = App()
