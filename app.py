@@ -6,41 +6,38 @@ class App:
         self.username, self.raw_password, self.hosts = Setup().import_settings()
         self.decoded_password = Setup().getPassword(self.raw_password)
 
-        self.totens = self.hosts.get('totens', [])
-        self.panels = self.hosts.get('panels', [])
+        self.totens = self.hosts['totens']
+        self.panels = self.hosts['panels']
 
-        # Running devices lists
+        # # Running devices lists
         self.totens_online_hosts = []
         self.panels_online_hosts = []
 
         self.totens_offline_hosts = []
         self.panels_offline_hosts = []
 
-    def isOnline(self, onlisttype, offlisttype):
+    def isOnline(self, hosts, category):
 
-        for host in self.hosts:
+        for host in hosts:
             command = ["ping", "-n", "3", "-w", "1000", host]
             response = subprocess.run(command, capture_output=True, text=True)
+            
             if response.returncode == 0:
-                onlisttype.append(host)
-                print(f"{host} is online")
+                if category == 'panel':
+                    self.panels_online_hosts.append(host)
+                elif category == 'totem':
+                    self.panels_online_hosts
+
             else:
-                offlisttype.append(host)
-                print(f"{host} is offline")
+                if category == 'panel':
+                    self.panels_offline_hosts.append(host)
+                elif category == 'totem':
+                    self.totens_offline_hosts.append(host)
 
     def run(self):
-        print("Checking Totens...")
-        self.isOnline(self.totens_online_hosts, self.totens_offline_hosts)
-
-        print("\nChecking Panels...")
-        self.isOnline(self.panels_online_hosts, self.panels_offline_hosts)
-
-        print("\nTotens Online:", self.totens_online_hosts)
-        print("Totens Offline:", self.totens_offline_hosts)
-
-        print("\nPanels Online:", self.panels_online_hosts)
-        print("Panels Offline:", self.panels_offline_hosts)
-
+        print(self.hosts['panels'])
+        self.isOnline(self.hosts['panels'], 'panel')
+        print(self.panels_online_hosts)
 
 if __name__ == "__main__":
     app = App()
