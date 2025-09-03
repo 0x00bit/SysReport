@@ -4,8 +4,7 @@ import wmi
 
 class App:
     def __init__(self):
-        self.username, self.raw_password, self.hosts = Setup().import_settings()
-        self.decoded_password = Setup().getPassword(self.raw_password)
+        self.hosts = Setup().import_settings()
 
         self.totens = self.hosts['totens']
         self.panels = self.hosts['panels']
@@ -35,18 +34,9 @@ class App:
                 elif category == 'totem':
                     self.totens_offline_hosts.append(host)
 
-    def checkProcess(self, hosts, process):
-        for host in hosts:
-            conn = wmi.WMI(computer=host, user="HAPVIDA", password="cpdh@p")
-            for process in conn.Win32_Process():
-                if "msedge.exe" in process.Name.lower():
-                    print("deu bom")
-
     def run(self):
-        print(self.hosts['totens'])
-        self.isOnline(self.hosts['totens'], 'totem')
-        print(self.totens_online_hosts)
-
+        self.isOnline(self.hosts['totens'])
+        
 if __name__ == "__main__":
     app = App()
     app.run()
