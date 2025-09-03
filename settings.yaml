@@ -1,0 +1,18 @@
+username: teste
+password: dGV1cGFp
+
+hosts:
+  totens:
+    - localhost
+    - 127.0.0.1
+    - ::1 
+    - www.google.com
+    - www.github.com
+    - www.stackoverflow.com
+    - www.reddit.com
+  panels:
+    - www.youtube.com
+    - www.netflix.com
+    - www.spotify.com
+    - www.hulu.com
+    - www.primevideo.com
