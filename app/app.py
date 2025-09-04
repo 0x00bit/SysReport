@@ -41,7 +41,6 @@ class App:
 
             self.isOnline(self.panels, 'panel')
 
-            self.conn.flushdb()
             print("DB clean!")
 
             time.sleep(int(self.timeout) / 1000)
