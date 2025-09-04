@@ -18,40 +18,31 @@ class App:
         self.totens = self.hosts['totens']
         self.panels = self.hosts['panels']
 
-        # # Running devices lists
-        self.totens_online_hosts = []
-        self.panels_online_hosts = []
-
-        self.totens_offline_hosts = []
-        self.panels_offline_hosts = []
-
     def isOnline(self, hosts, category):
 
         for host in hosts:
-            command = ["ping", "-c", "1", "-W", "1", host]
+            command = ["ping", "-c", "3", "-W", "1", host]
             response = subprocess.run(command, capture_output=True, text=True)
 
             status = 'UP' if response.returncode == 0 else 'DOWN'
             
             try:
                 if category == 'panel':
-                    self.conn.hset("PAINEL_STATUS", host, status)
+                    self.conn.hset("PAINEL_STATUS", host, status, ex=10)
                 elif category == 'totem':
-                    self.conn.hset("TOTEM_STATUS", host, status)
+                    self.conn.hset("TOTEM_STATUS", host, status, ex=10)
             except Exception as a:
                 print(f"erro ao gravar no redis", a)
 
     def run(self):
         while True:
-    
-            self.totens_online_hosts.clear()
-            self.totens_offline_hosts.clear()
-            self.panels_online_hosts.clear()
-            self.panels_offline_hosts.clear()
 
             self.isOnline(self.totens, 'totem')
 
             self.isOnline(self.panels, 'panel')
+
+            self.conn.flushdb()
+            print("DB clean!")
 
             time.sleep(int(self.timeout) / 1000)
         
