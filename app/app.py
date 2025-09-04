@@ -30,22 +30,20 @@ class App:
         for host in hosts:
             command = ["ping", "-c", "1", "-W", "1", host]
             response = subprocess.run(command, capture_output=True, text=True)
-            
-            if response.returncode == 0:
-                if category == 'panel':
-                    self.panels_online_hosts.append(host)
-                elif category == 'totem':
-                    self.totens_online_hosts.append(host)
 
-            else:
+            status = 'UP' if response.returncode == 0 else 'DOWN'
+            
+            try:
                 if category == 'panel':
-                    self.panels_offline_hosts.append(host)
+                    self.conn.hset("PAINEL_STATUS", host, status)
                 elif category == 'totem':
-                    self.totens_offline_hosts.append(host)
+                    self.conn.hset("TOTEM_STATUS", host, status)
+            except Exception as a:
+                print(f"erro ao gravar no redis", a)
 
     def run(self):
         while True:
-            # Limpa as listas antes de cada rodada
+    
             self.totens_online_hosts.clear()
             self.totens_offline_hosts.clear()
             self.panels_online_hosts.clear()
@@ -53,21 +51,7 @@ class App:
 
             self.isOnline(self.totens, 'totem')
 
-            try:
-                self.conn.set('TOTEM UP', ','.join(self.totens_online_hosts))
-                self.conn.set('TOTEM DOWN', ','.join(self.totens_offline_hosts))
-            except Exception as e:
-                print("Error setting Redis keys:", e)
-
-            print("DEBUGGING> Totens Online:", self.totens_online_hosts)
-
             self.isOnline(self.panels, 'panel')
-            try:
-                self.conn.set('PAINEL UP', ','.join(self.panels_online_hosts))
-                self.conn.set('PAINEL DOWN', ','.join(self.panels_offline_hosts))
-            except Exception as e:
-                print("Error setting Redis keys:", e)
-            print("Paineis Online:", self.panels_online_hosts)
 
             time.sleep(int(self.timeout) / 1000)
         
