@@ -1,10 +1,19 @@
 import subprocess
 from settings import Setup
 import time
+import redis
 
 class App:
     def __init__(self):
         self.timeout, self.hosts = Setup().import_settings()
+        self.conn = redis.Redis(host='localhost', port=6379, db=0)
+        # Check Redis connection
+        try:
+            self.conn.ping()    
+            print("Connected to Redis server successfully.")
+        except redis.ConnectionError:
+            print("Redis server is not running. Please start the Redis server and try again.")
+            exit(1)
 
         self.totens = self.hosts['totens']
         self.panels = self.hosts['panels']
@@ -37,9 +46,27 @@ class App:
     def run(self):
         while True:
             self.isOnline(self.totens, 'totem')
-            print("Totens Online:", self.totens_online_hosts)
+            try:
+                self.conn.set('TOTEM UP', ','.join(self.totens_online_hosts))
+                self.conn.set('TOTEM DOWN', ','.join(self.totens_offline_hosts))
+            except Exception as e:
+                print("Error setting Redis keys:", e)
+
+            print("DEBUGGING> Totens Online:", self.totens_online_hosts)
+
             self.isOnline(self.panels, 'panel')
-            print("Panels Online:", self.panels_online_hosts)
+            try:
+                self.conn.set('PAINEL UP', ','.join(self.panels_online_hosts))
+                self.conn.set('PAINEL DOWN', ','.join(self.panels_offline_hosts))
+            except Exception as e:
+                print("Error setting Redis keys:", e)
+            print("Paineis Online:", self.panels_online_hosts)
+
+            # Clear lists for next iteration
+            self.totens_online_hosts.clear()
+            self.panels_online_hosts.clear()
+            self.totens_offline_hosts.clear()
+            self.panels_offline_hosts.clear()
             time.sleep(int(self.timeout) / 1000)
         
 if __name__ == "__main__":
