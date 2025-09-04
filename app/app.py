@@ -6,7 +6,7 @@ import redis
 class App:
     def __init__(self):
         self.timeout, self.hosts = Setup().import_settings()
-        self.conn = redis.Redis(host='host.docker.internal', port=6379, db=0)
+        self.conn = redis.Redis(host='redis', port=6379, db=0)
         # Check Redis connection
         try:
             self.conn.ping()    
@@ -45,7 +45,14 @@ class App:
 
     def run(self):
         while True:
+            # Limpa as listas antes de cada rodada
+            self.totens_online_hosts.clear()
+            self.totens_offline_hosts.clear()
+            self.panels_online_hosts.clear()
+            self.panels_offline_hosts.clear()
+
             self.isOnline(self.totens, 'totem')
+
             try:
                 self.conn.set('TOTEM UP', ','.join(self.totens_online_hosts))
                 self.conn.set('TOTEM DOWN', ','.join(self.totens_offline_hosts))
@@ -62,11 +69,6 @@ class App:
                 print("Error setting Redis keys:", e)
             print("Paineis Online:", self.panels_online_hosts)
 
-            # Clear lists for next iteration
-            self.totens_online_hosts.clear()
-            self.panels_online_hosts.clear()
-            self.totens_offline_hosts.clear()
-            self.panels_offline_hosts.clear()
             time.sleep(int(self.timeout) / 1000)
         
 if __name__ == "__main__":

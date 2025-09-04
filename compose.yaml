@@ -1,0 +1,30 @@
+services:
+  app:
+    build: ./app
+    container_name: sysreport_app
+    depends_on:
+      - redis
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+
+  redis:
+    build: ./redis
+    container_name: sysreport_redis
+    ports:
+      - "6379:6379"
+
+  grafana:
+    build: ./grafana
+    container_name: sysreport_grafana
+    ports:
+      - "3000:3000"
+    depends_on:
+      - redis
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer
+      - GF_SERVER_ROOT_URL=http://localhost:3000
