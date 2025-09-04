@@ -28,7 +28,7 @@ class App:
     def isOnline(self, hosts, category):
 
         for host in hosts:
-            command = ["ping", "-n", "3", "-w", "1000", host]
+            command = ["ping", "-c", "1", "-W", "1", host]
             response = subprocess.run(command, capture_output=True, text=True)
             
             if response.returncode == 0:
