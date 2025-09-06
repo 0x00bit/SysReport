@@ -24,7 +24,7 @@ class App:
             command = ["ping", "-c", "3", "-W", "1", host]
             response = subprocess.run(command, capture_output=True, text=True)
 
-            status = 'UP' if response.returncode == 0 else 'DOWN'
+            status = 1 if response.returncode == 0 else 0
             
             try:
                 if category == 'panel':
