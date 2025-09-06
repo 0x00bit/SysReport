@@ -28,9 +28,9 @@ class App:
             
             try:
                 if category == 'panel':
-                    self.conn.hset("PAINEL_STATUS", host, status, ex=10)
+                    self.conn.hset("PAINEL_STATUS", host, status)
                 elif category == 'totem':
-                    self.conn.hset("TOTEM_STATUS", host, status, ex=10)
+                    self.conn.hset("TOTEM_STATUS", host, status)
             except Exception as a:
                 print(f"Error: it couldn't record on redis db", a)
 
