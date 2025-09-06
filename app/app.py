@@ -32,7 +32,7 @@ class App:
                 elif category == 'totem':
                     self.conn.hset("TOTEM_STATUS", host, status, ex=10)
             except Exception as a:
-                print(f"erro ao gravar no redis", a)
+                print(f"Error: it couldn't record on redis db", a)
 
     def run(self):
         while True:
@@ -41,9 +41,10 @@ class App:
 
             self.isOnline(self.panels, 'panel')
 
-            print("DB clean!")
-
             time.sleep(int(self.timeout) / 1000)
+
+            self.conn.flushdb()
+            print("DB clean!")
         
 if __name__ == "__main__":
     app = App()
