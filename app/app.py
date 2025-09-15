@@ -2,6 +2,7 @@ import subprocess
 from settings import Setup
 import time
 import redis
+import threading
 
 class App:
     def __init__(self):
@@ -16,7 +17,7 @@ class App:
             exit(1)
 
         self.totens = self.hosts['totens']
-        self.panels = self.hosts['panels']
+        self.panels = self.hosts['paineis']
 
     def isOnline(self, hosts, category):
 
@@ -37,13 +38,17 @@ class App:
     def run(self):
         while True:
 
-            self.isOnline(self.totens, 'totem')
+            t1 = threading.Thread(target=self.isOnline, args=(self.totens, 'totem'))
+            t2 = threading.Thread(target=self.isOnline, args=(self.panels, 'panel'))
+            t1.start()
+            t2.start()
+            t1.join()
+            t2.join()
 
-            self.isOnline(self.panels, 'panel')
+            time.sleep(int(self.timeout) * 1000)
 
-            time.sleep(int(self.timeout) / 1000)
-
-            self.conn.flushdb()
+            self.conn.expire("PAINEL_STATUS", int(self.timeout) * 2)
+            self.conn.expire("TOTEM_STATUS", int(self.timeout) * 2)
             print("DB clean!")
         
 if __name__ == "__main__":
