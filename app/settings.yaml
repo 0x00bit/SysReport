@@ -1,15 +1,8 @@
-timeout: 5000 # in milliseconds
+timeout: 20 # in seconds
 hosts:
   totens:
-    - localhost
-    - ::1 
-    - www.google.com
-    - www.github.com
-    - www.stackoverflow.com
-    - www.reddit.com
-  panels:
-    - www.youtube.com
-    - www.netflix.com
-    - www.spotify.com
-    - www.hulu.com
-    - www.primevideo.com
+  - www.example1.com
+  - www.example2.com
+  paineis:
+  - www.example3.com
+  - www.example4.com
