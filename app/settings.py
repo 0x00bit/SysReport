@@ -14,9 +14,5 @@ class Setup:
         except FileNotFoundError as e:
             print(f"Settings file not found. {e}")
             return 1
-    
-    def getPassword(self, password):
-        if password:
-            decoded_bytes = base64.b64decode(password)
-            return decoded_bytes.decode('utf-8')
+
     
