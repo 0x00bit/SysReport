@@ -1,0 +1,119 @@
+/* ======= ESTILO GERAL ======= */
+:root {
+    --bg-color: #ffffff;
+    --panel-color: #f3f3f3;
+    --text-color: #222;
+    --header-bg: #e0e0e0;
+    --online-color: #2ecc71;
+    --offline-color: #e74c3c;
+}
+
+body {
+    font-family: "Segoe UI", sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--header-bg);
+    padding: 15px 25px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.6rem;
+}
+
+#toggle-theme {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+#toggle-theme:hover {
+    transform: scale(1.1);
+}
+
+/* ======= LAYOUT PRINCIPAL ======= */
+main {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 120px); /* Altura total menos header e footer */
+    gap: 20px;
+}
+
+/* ======= PAINÉIS ======= */
+.panel {
+    background-color: var(--panel-color);
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    transition: background-color 0.3s;
+    flex: 1; /* Cada painel ocupa metade do espaço */
+    display: flex;
+    flex-direction: column;
+}
+
+.panel h2 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.hosts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 10px;
+    flex: 1; /* Ocupa o espaço restante do painel */
+    align-content: start;
+}
+
+.host-card {
+    text-align: center;
+    border-radius: 8px;
+    padding: 10px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+.host-card:hover {
+    transform: scale(1.05);
+}
+.host-card.online {
+    background-color: var(--online-color);
+    color: white;
+}
+.host-card.offline {
+    background-color: var(--offline-color);
+    color: white;
+}
+
+/* ======= RODAPÉ ======= */
+footer {
+    text-align: right;
+    padding: 10px 20px;
+    font-size: 0.9em;
+    background-color: var(--panel-color);
+    color: var(--text-color);
+    border-top: 1px solid #ccc;
+}
+
+/* ======= MODO NOTURNO ======= */
+body.dark {
+    --bg-color: #1e1e1e;
+    --panel-color: #2c2c2c;
+    --text-color: #eee;
+    --header-bg: #222;
+    --online-color: #27ae60;
+    --offline-color: #c0392b;
+}
+
+body.dark header {
+    box-shadow: 0 2px 8px rgba(255,255,255,0.05);
+}

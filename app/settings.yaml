@@ -4,9 +4,22 @@ totens:
   - 186.192.81.143
   www.yahoo.com.br:
   - 76.223.84.192
+  www.bing.com.br:
+  - 204.79.197.200
+  www.uol.com.br:
+  - 186.192.81.146
+  meuip:
+  - 192.168.15.8
+  google-dns:
+  - 8.8.8.8
 
 paineis:
-  painel1.example.com:
-  - 186.192.81.144
-  painel2.example.com:
-  - 186.192.81.145
+  www.reddit.com:
+  - 151.101.1.140
+  www.wikipedia.org:
+  - 91.198.174.192
+  www.youtube.com:
+  - 142.250.190.206
+  www.twitter.com:
+  - 104.244.42.1
+

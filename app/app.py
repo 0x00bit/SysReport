@@ -22,7 +22,7 @@ class App:
         for host in hosts:
             command = ["ping", "-c", "3", "-W", "1", host]
             response = subprocess.run(command, capture_output=True, text=True)
-            status = 1 if response.returncode == 0 else 0
+            status = 0 if response.returncode == 0 else 1
             ip = hosts[host][0]
             
             try:
