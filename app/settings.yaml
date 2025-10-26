@@ -1,8 +1,12 @@
 timeout: 20 # in seconds
-hosts:
-  totens:
-  - www.example1.com
-  - www.example2.com
-  paineis:
-  - www.example3.com
-  - www.example4.com
+totens:
+  www.g1.com.br:
+  - 186.192.81.143
+  www.yahoo.com.br:
+  - 76.223.84.192
+
+paineis:
+  painel1.example.com:
+  - 186.192.81.144
+  painel2.example.com:
+  - 186.192.81.145
