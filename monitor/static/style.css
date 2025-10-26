@@ -68,20 +68,43 @@ main {
     margin-bottom: 15px;
 }
 
+/* ======= GRID DE HOSTS - LADO A LADO COM QUEBRA ======= */
 .hosts-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-    gap: 10px;
-    flex: 1; /* Ocupa o espaço restante do painel */
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 12px;
+    flex: 1;
     align-content: start;
+    overflow-y: auto;
 }
 
 .host-card {
     text-align: center;
     border-radius: 8px;
-    padding: 10px;
+    padding: 15px 5px;
     transition: background-color 0.3s, transform 0.2s;
+    min-height: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
+
+.host-card:hover {
+    transform: scale(1.05);
+}
+
+.host-card h3 {
+    margin: 0 0 5px 0;
+    font-size: 0.9rem;
+}
+
+.host-card p {
+    margin: 0;
+    font-size: 0.8rem;
+    opacity: 0.9;
+}
+
 .host-card:hover {
     transform: scale(1.05);
 }

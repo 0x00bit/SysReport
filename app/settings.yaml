@@ -12,6 +12,14 @@ totens:
   - 192.168.15.8
   google-dns:
   - 8.8.8.8
+  www.vivo.com.br:
+  - 162.159.136.63
+  www.claro.com.br:
+  - 3.175.14.121
+  www.ifrn.edu.br:
+  - 200.137.1.195
+  www.oi.com.br:
+  - 108.139.119.123
 
 paineis:
   www.reddit.com:
@@ -22,4 +30,8 @@ paineis:
   - 142.250.190.206
   www.twitter.com:
   - 104.244.42.1
+  www.riot.com:
+  - 23.212.84.116
+  
+  
 
