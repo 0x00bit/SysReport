@@ -1,8 +1,37 @@
 timeout: 20 # in seconds
-hosts:
-  totens:
-  - www.example1.com
-  - www.example2.com
-  paineis:
-  - www.example3.com
-  - www.example4.com
+totens:
+  www.g1.com.br:
+  - 186.192.81.143
+  www.yahoo.com.br:
+  - 76.223.84.192
+  www.bing.com.br:
+  - 204.79.197.200
+  www.uol.com.br:
+  - 186.192.81.146
+  meuip:
+  - 192.168.15.8
+  google-dns:
+  - 8.8.8.8
+  www.vivo.com.br:
+  - 162.159.136.63
+  www.claro.com.br:
+  - 3.175.14.121
+  www.ifrn.edu.br:
+  - 200.137.1.195
+  www.oi.com.br:
+  - 108.139.119.123
+
+paineis:
+  www.reddit.com:
+  - 151.101.1.140
+  www.wikipedia.org:
+  - 91.198.174.192
+  www.youtube.com:
+  - 142.250.190.206
+  www.twitter.com:
+  - 104.244.42.1
+  www.riot.com:
+  - 23.212.84.116
+  
+  
+

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Monitoramento de Hosts</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script defer src="{{ url_for('static', filename='scripts/script.js') }}"></script>
+</head>
+<body>
+    <header>
+        <h1>Monitoramento de Hosts</h1>
+        <button id="toggle-theme" title="Alternar modo noturno">🌙</button>
+    </header>
+
+    <main>
+        {% for category, hosts in panels.items() %}
+        <section class="panel" data-category="{{ category }}">
+            <h2>{{ category.replace('_', ' ') }}</h2>
+            <div class="hosts-grid">
+                {% for host in hosts %}
+                <div class="host-card {{ 'online' if host.status == 1 else 'offline' }}" data-host="{{ host.hostname }}">
+                    <h3>{{ host.hostname }}</h3>
+                    <p>{{ host.ip }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endfor %}
+    </main>
+
+    <footer>
+        <span id="last-update">Última atualização: --:--:--</span>
+    </footer>
+</body>
+</html>
